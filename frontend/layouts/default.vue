@@ -1,12 +1,14 @@
 <template>
-  <v-app>
+  <v-app style="max-height: 100vh; height:100%">
     <v-card tile flat class="overflow-visible">
       <IAppBar />
-      <v-sheet>
-        <v-main class="mt-15">
-          <nuxt />
-        </v-main>
-      </v-sheet>
+
+      <v-main
+        class="mt-16"
+        style="max-height: calc(100vh - 100px); height: 100%;"
+      >
+        <nuxt />
+      </v-main>
     </v-card>
   </v-app>
 </template>

@@ -1,26 +1,34 @@
 <template>
-  <v-card tile flat>
+  <v-container tile flat>
     <v-card-title>
       <h1>Search</h1>
     </v-card-title>
-    <v-card-text style="width:35%">
+    <v-card-text
+      style="width:35%; gap: 50px;"
+      class="d-flex align-center justify-center"
+    >
       <v-text-field
         @input="trottledSave"
         label="Search User"
         v-model="info"
       ></v-text-field>
+      <v-btn @click="allAuthors()">
+        All Authors
+      </v-btn>
     </v-card-text>
-    <v-row>
+    <v-row v-if="authors">
       <v-col
-        v-if="authors"
+        v-for="item in authors"
+        :key="item.id"
         cols="12"
+        sm="6"
         class="mt-12 d-flex  flex-wrap "
         style="gap: 35px"
       >
-        <AuthorCardSearch v-for="item in authors" :key="item.id" :user="item" />
+        <AuthorCardSearch :user="item" />
       </v-col>
     </v-row>
-  </v-card>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -40,14 +48,17 @@ import trottle from '../helpers/trottle'
 export default class Search extends Vue {
   public info: string = ''
 
+  public allAuthors() {
+    this['$store'].dispatch('author/GET_ALL_AUTHORS')
+  }
+
   get trottledSave() {
     let DELAY = 1000
     return trottle(this.searchUser, DELAY)
   }
 
   public async searchUser() {
-    console.log('click')
-    this['$store'].dispatch('author/GET_AUTHORS', this.info)
+    this['$store'].dispatch('author/GET_AUTHORS_BY_NAME', this.info)
   }
 }
 </script>

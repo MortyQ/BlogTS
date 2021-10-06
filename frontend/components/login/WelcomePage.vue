@@ -7,8 +7,12 @@
     >
       <v-col cols="8" class="d-flex justify-center align-center">
         <span style="color: white" class="title">
-          <span v-if="isLogin"> You have Account ? Come here </span>
-          <span v-else> You dosnt have Account ? Come here </span>
+          <span v-if="isLogin" style="color:white">
+            You have Account ? Come here
+          </span>
+          <span v-else style="color:white">
+            You dosnt have Account ? Come here
+          </span>
         </span>
       </v-col>
       <v-col cols="12">
@@ -45,8 +49,8 @@ import { mapState } from 'vuex'
 
 @Component({
   computed: {
-    ...mapState('login', ['isLogin']),
-  },
+    ...mapState('login', ['isLogin'])
+  }
 })
 export default class Welcome extends Vue {
   isLogin!: boolean
@@ -54,7 +58,7 @@ export default class Welcome extends Vue {
   title!: string
   @Prop({
     default:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti aliquid quae porro illum, dolores minima?',
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti aliquid quae porro illum, dolores minima?'
   })
   text!: string
   @Prop({ default: 'Sing In' })

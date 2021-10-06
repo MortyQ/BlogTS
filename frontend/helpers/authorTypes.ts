@@ -6,4 +6,5 @@ export interface IAuthor {
   lastName: string
   description: string
   avatar?: {}
+  background?: {}
 }
