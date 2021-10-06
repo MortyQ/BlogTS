@@ -18,7 +18,7 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn icon>
+    <v-btn icon link to="/search-authors">
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
 

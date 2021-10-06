@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <v-card tile class="overflow-hidden">
+    <v-card tile flat class="overflow-visible">
       <IAppBar />
-      <v-sheet class="overflow-y-auto">
+      <v-sheet>
         <v-main class="mt-15">
           <nuxt />
         </v-main>

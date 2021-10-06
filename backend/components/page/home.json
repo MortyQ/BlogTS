@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_page_homes",
+  "info": {
+    "name": "home",
+    "icon": "angle-double-up"
+  },
+  "options": {},
+  "attributes": {
+    "blog": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.blog"
+    }
+  }
+}

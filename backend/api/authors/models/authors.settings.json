@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "username": {
+    "firstName": {
       "type": "string",
       "required": true,
       "unique": true
@@ -37,7 +37,13 @@
     },
     "slug": {
       "type": "uid",
-      "targetField": "username"
+      "targetField": "firstName"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
     }
   }
 }
