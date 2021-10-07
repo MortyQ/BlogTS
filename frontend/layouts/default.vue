@@ -36,8 +36,8 @@ Status: <v-icon color=green>mdi-circle</v-icon> </pre>
               </v-list-item-title>
             </v-list-item>
             <v-list-item>
-              <v-btn text>
-                Create Author
+              <v-btn text @click="editAuthor()">
+                Edit Author Information
               </v-btn>
             </v-list-item>
             <v-list-item>
@@ -48,7 +48,7 @@ Status: <v-icon color=green>mdi-circle</v-icon> </pre>
           </v-list>
         </v-menu>
 
-        <v-btn icon link to="/login">
+        <v-btn icon>
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
       </v-app-bar>
@@ -67,6 +67,8 @@ Status: <v-icon color=green>mdi-circle</v-icon> </pre>
 import { Component, Vue } from 'nuxt-property-decorator'
 import { mapState } from 'vuex'
 
+import { ILoginUser } from '../helpers/loginTypes'
+
 @Component({
   components: {},
   computed: {
@@ -74,19 +76,22 @@ import { mapState } from 'vuex'
   }
 })
 export default class Default extends Vue {
-  loginUser!: {}
+  loginUser!: ILoginUser
+
   loading: boolean = false
 
-  public logout() {
-    this['$store'].dispatch('login/LOGOUT')
-    this.loading = true
-    setTimeout(() => {
-      this['$router'].push('/login')
-    }, 2000)
+  public editAuthor() {
+    this['$router'].push(`/create-author/${this.loginUser.slug}`)
   }
 
-  mounted() {
-    console.log(this.loginUser)
+  public logout() {
+    this.loading = true
+    setTimeout(() => {
+      this['$store'].dispatch('login/LOGOUT')
+      this['$router'].push('/login')
+    }, 1000)
   }
+
+  mounted() {}
 }
 </script>

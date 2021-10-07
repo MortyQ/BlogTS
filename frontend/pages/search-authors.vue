@@ -41,6 +41,7 @@ import axios from '@nuxtjs/axios'
 import { mapState } from 'vuex'
 import AuthorCardSearch from '../components/authors/AuthorCardSearch.vue'
 import trottle from '../helpers/trottle'
+
 @Component({
   components: {
     AuthorCardSearch

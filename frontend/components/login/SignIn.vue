@@ -106,9 +106,5 @@ export default class SignIn extends Vue {
       console.error(e)
     }
   }
-
-  mounted() {
-    console.log(this.loginStore.errorMessage)
-  }
 }
 </script>

@@ -13,7 +13,8 @@ import IndexHeader from '../components/global/IndexHeader.vue'
 @Component({
   components: {
     IndexHeader
-  }
+  },
+  middleware: 'redirect'
 })
 export default class Index extends Vue {}
 </script>

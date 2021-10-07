@@ -33,3 +33,8 @@ export interface ILoginUser {
   slug?: string
   username: string
 }
+
+export interface IAuthResponce {
+  jwt: string
+  user: ILoginUser
+}

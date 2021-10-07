@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-main>
+    <v-main style="max-height: 100vh; height: 100%">
       <nuxt />
     </v-main>
   </v-app>

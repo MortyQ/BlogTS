@@ -5,7 +5,12 @@ import {
   Action,
   MutationAction
 } from 'vuex-module-decorators'
-import { IRegister, ILogin, ILoginUser } from '~/helpers/loginTypes'
+import {
+  IRegister,
+  ILogin,
+  ILoginUser,
+  IAuthResponce
+} from '~/helpers/loginTypes'
 import * as Context from '@nuxt/types'
 import axios from 'axios'
 import { AppSuperstore } from './index'
@@ -60,16 +65,18 @@ export default class Login extends VuexModule {
   }
 
   @Mutation
-  private _LOGIN(loginUser: ILoginUser) {
-    this.loginUser = loginUser
+  private _LOGIN(loginUser: IAuthResponce) {
+    this.loginUser = loginUser.user
+    this.jwt = loginUser.jwt
   }
 
   @Action({ commit: '_LOGIN' })
   public async LOGIN(login: ILogin) {
     try {
       const res = await axios.post('http://localhost:1337/auth/local/', login)
-      localStorage.setItem('JWT', `Bearer ${res?.data?.jwt}`)
-      return res.data.user
+      localStorage.setItem('jwt', `Bearer ${res?.data?.jwt}`)
+
+      return res.data
     } catch (e) {
       this.errorMessage = true
       console.log(e)
@@ -78,7 +85,7 @@ export default class Login extends VuexModule {
 
   @MutationAction({ mutate: ['loginUser', 'jwt'] })
   public async LOGOUT() {
-    localStorage.removeItem('JWT')
+    localStorage.removeItem('jwt')
     return {
       loginUser: null,
       jwt: null

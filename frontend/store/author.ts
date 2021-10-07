@@ -15,7 +15,7 @@ export default class Authors extends VuexModule {
     try {
       console.log('ACTION')
       let res = await axios.get(
-        `http://localhost:1337/authors?firstName_contains=${info}`
+        `http://localhost:1337/users?firstName_contains=${info}`
       )
       console.log(res.data)
       return res.data
@@ -32,7 +32,7 @@ export default class Authors extends VuexModule {
   public async GET_ALL_AUTHORS(authors: IAuthor[]) {
     try {
       console.log('ACTION')
-      let res = await axios.get(`http://localhost:1337/authors`)
+      let res = await axios.get(`http://localhost:1337/users`)
       console.log(res.data)
       return res.data
     } catch (e) {
