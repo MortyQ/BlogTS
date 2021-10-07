@@ -1,5 +1,5 @@
 <template>
-  <v-img style="max-height: 100vh" lazy-src="/left.jpeg" src="/left.jpeg">
+  <v-img style="height: 100%" lazy-src="/left.jpeg" src="/left.jpeg">
     <v-row
       style="min-height: 100vh"
       class="d-flex flex-column justify-center align-center"

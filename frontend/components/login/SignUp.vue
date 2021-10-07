@@ -90,6 +90,7 @@
                 type="submit"
                 :disabled="!formValid"
                 class="rounded-pill radius mt-5"
+                :loading="loading"
                 style="
                   background: black;
                   box-shadow: none;
@@ -117,9 +118,16 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-@Component({ components: { ValidationObserver, ValidationProvider } })
+import { mapState } from 'vuex'
+@Component({
+  components: { ValidationObserver, ValidationProvider },
+  computed: {
+    ...mapState('login', ['isLogin'])
+  }
+})
 export default class SignUp extends Vue {
   isLogin!: boolean
+  loading: boolean = false
   register = {
     username: '',
     email: '',
@@ -128,7 +136,6 @@ export default class SignUp extends Vue {
   }
   showPassword: boolean = false
   userChecked: boolean = false
-  loading: boolean = false
   public onSubmit() {
     this['$store'].dispatch('login/REGISTER', {
       username: this.register.username,
@@ -137,6 +144,10 @@ export default class SignUp extends Vue {
       role: 'Public',
       confirmed: true
     })
+    this.loading = true
+    setTimeout(() => {
+      this['$store'].dispatch('login/ADD_PAGE', !this.isLogin)
+    }, 3000)
   }
 }
 </script>

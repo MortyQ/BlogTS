@@ -61,7 +61,8 @@
     },
     "slug": {
       "type": "uid",
-      "targetField": "username"
+      "targetField": "username",
+      "required": true
     }
   }
 }

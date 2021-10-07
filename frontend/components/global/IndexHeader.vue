@@ -14,7 +14,14 @@
         <span class=" text-h3 text-xl-h1 text-lg-h1 text-md-h1 text-sm-h2 "
           >Create a blog and share your voice in minutes</span
         >
-        <v-btn tile text width="200px" class="mt-10" :ripple="false">
+        <v-btn
+          tile
+          text
+          color="red"
+          max-width="300px"
+          class="mt-10 pa-10"
+          :ripple="false"
+        >
           <span style="font-size: 1.3rem; color: blue">
             Start your blog
           </span>

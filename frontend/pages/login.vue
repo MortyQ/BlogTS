@@ -1,15 +1,19 @@
 <template>
-  <v-row class="d-flex justify-center align-center" cols="12">
+  <v-row
+    class="d-flex justify-center align-center"
+    cols="12"
+    style="height: 100%; margin: 0 !important; padding: 0 !important;"
+  >
     <v-col
       cols="12"
       md="6"
-      style="margin-bottom: 0 !important; padding-bottom: 0 !important"
+      style="margin: 0 !important; padding: 0 !important; height: 100%"
     >
       <IWelcome :change-mod-type="change" />
     </v-col>
     <v-col cols="12" md="6" class="d-flex flex-column h-100 justify-center">
       <v-card tile flat class="mb-12 ma-auto d-flex">
-        <v-img height="80px" width="80px" lazy-src="/logo.png" src="/logo.png">
+        <v-img height="30%" width="30%" lazy-src="/logo.png" src="/logo.png">
         </v-img>
         <v-card-title class="text-h4"> Welcome in Blogify</v-card-title>
       </v-card>

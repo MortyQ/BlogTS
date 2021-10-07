@@ -1,15 +1,19 @@
 <template>
-  <v-container tile flat>
-    <v-card-title>
-      <h1>Search</h1>
-    </v-card-title>
+  <v-container
+    tile
+    flat
+    class="d-flex flex-column justify-center align-center mt-10"
+  >
+    <span style=" width: 80%" class="ml-5">
+      <h1>Search All Authors</h1>
+    </span>
     <v-card-text
-      style="width:35%; gap: 50px;"
+      style="width:80%; gap: 50px; "
       class="d-flex align-center justify-center"
     >
       <v-text-field
         @input="trottledSave"
-        label="Search User"
+        label="Search Author"
         v-model="info"
       ></v-text-field>
       <v-btn @click="allAuthors()">

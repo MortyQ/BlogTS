@@ -1,5 +1,11 @@
-import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
-import { IRegister, ILogin } from '~/helpers/loginTypes'
+import {
+  VuexModule,
+  Module,
+  Mutation,
+  Action,
+  MutationAction
+} from 'vuex-module-decorators'
+import { IRegister, ILogin, ILoginUser } from '~/helpers/loginTypes'
 import * as Context from '@nuxt/types'
 import axios from 'axios'
 import { AppSuperstore } from './index'
@@ -12,6 +18,7 @@ export default class Login extends VuexModule {
   public lastUserName: string | null = ''
   public errorMessage: boolean = false
   public jwt: string | null = ''
+  public loginUser: ILoginUser | null = null
 
   function({ $axios, app, store }) {
     $axios.onRequest((config: any) => {
@@ -24,6 +31,7 @@ export default class Login extends VuexModule {
   @Mutation
   private _ADD_REGISTER(register: IRegister) {
     this.register = register
+    this.lastUserName = register.username
   }
 
   @Action({ commit: '_ADD_REGISTER' })
@@ -35,7 +43,7 @@ export default class Login extends VuexModule {
         'http://localhost:1337/auth/local/register',
         register
       )
-      //   this.lastUserName = register.username
+      return register
     } catch (e) {
       console.log(e)
     }
@@ -52,8 +60,8 @@ export default class Login extends VuexModule {
   }
 
   @Mutation
-  private _LOGIN(login: ILogin) {
-    this.login = login
+  private _LOGIN(loginUser: ILoginUser) {
+    this.loginUser = loginUser
   }
 
   @Action({ commit: '_LOGIN' })
@@ -61,9 +69,19 @@ export default class Login extends VuexModule {
     try {
       const res = await axios.post('http://localhost:1337/auth/local/', login)
       localStorage.setItem('JWT', `Bearer ${res?.data?.jwt}`)
+      return res.data.user
     } catch (e) {
       this.errorMessage = true
       console.log(e)
+    }
+  }
+
+  @MutationAction({ mutate: ['loginUser', 'jwt'] })
+  public async LOGOUT() {
+    localStorage.removeItem('JWT')
+    return {
+      loginUser: null,
+      jwt: null
     }
   }
 }

@@ -8,6 +8,11 @@
       class="d-flex flex-column justify-center align-center mt-auto"
     >
       <v-col cols="10">
+        <span class="text-h4">
+          Sign Up to this Perfect Social
+        </span>
+      </v-col>
+      <v-col cols="10">
         <ValidationObserver ref="form" v-slot="{ valid: formValid }">
           <v-form @submit.prevent="userLogin">
             <ValidationProvider v-slot="{ errors }" rules="required">
@@ -73,16 +78,18 @@ import { mapState } from 'vuex'
 import { login as loginStore } from '../../store'
 
 @Component({
-  components: { ValidationObserver, ValidationProvider }
+  components: { ValidationObserver, ValidationProvider },
+  computed: {
+    ...mapState('login', ['lastUserName'])
+  }
 })
 export default class SignIn extends Vue {
   lastUserName!: string
-  lastName = this.lastUserName
   loginStore = loginStore
 
   get login(): ILogin {
     return {
-      identifier: this.lastName,
+      identifier: this.lastUserName,
       password: ''
     }
   }

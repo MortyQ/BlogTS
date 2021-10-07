@@ -1,7 +1,57 @@
 <template>
   <v-app style="max-height: 100vh; height:100%">
     <v-card tile flat class="overflow-visible">
-      <IAppBar />
+      <v-app-bar fixed elevation="0" color="#fff" height="80px">
+        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+
+        <v-btn text to="/" color="red">
+          <span style="color:black">
+            Blogify
+          </span>
+        </v-btn>
+
+        <v-spacer></v-spacer>
+
+        <v-btn text to="/search-authors" color="red">
+          <span style="color:black">Search all authors</span>
+          <v-icon>mdi-magnify</v-icon>
+        </v-btn>
+
+        <v-menu transition="slide-x-transition" bottom right>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn v-bind="attrs" v-on="on" text color="red">
+              <span style="color:black">
+                Customazing your account
+              </span>
+              <v-icon>mdi-heart</v-icon>
+            </v-btn>
+          </template>
+
+          <v-list v-if="loginUser" class="pa-5">
+            <v-list-item>
+              <v-list-item-title>{{ loginUser.username }}</v-list-item-title>
+              <v-list-item-title>
+                <pre>
+Status: <v-icon color=green>mdi-circle</v-icon> </pre>
+              </v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-btn text>
+                Create Author
+              </v-btn>
+            </v-list-item>
+            <v-list-item>
+              <v-btn :loading="loading" text @click="logout()">
+                Logout
+              </v-btn>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+
+        <v-btn icon link to="/login">
+          <v-icon>mdi-dots-vertical</v-icon>
+        </v-btn>
+      </v-app-bar>
 
       <v-main
         class="mt-16"
@@ -15,12 +65,28 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import IAppBar from '../components/global/AppBar.vue'
+import { mapState } from 'vuex'
 
 @Component({
-  components: {
-    IAppBar
+  components: {},
+  computed: {
+    ...mapState('login', ['loginUser'])
   }
 })
-export default class Default extends Vue {}
+export default class Default extends Vue {
+  loginUser!: {}
+  loading: boolean = false
+
+  public logout() {
+    this['$store'].dispatch('login/LOGOUT')
+    this.loading = true
+    setTimeout(() => {
+      this['$router'].push('/login')
+    }, 2000)
+  }
+
+  mounted() {
+    console.log(this.loginUser)
+  }
+}
 </script>
