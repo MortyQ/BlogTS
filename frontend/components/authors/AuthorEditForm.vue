@@ -54,8 +54,8 @@
         ></v-text-field>
       </ValidationProvider>
 
-      <v-btn class="mr-4" type="submit" :disabled="invalid">
-        submit
+      <v-btn class="mr-4" text type="submit" :disabled="invalid">
+        Update Information
       </v-btn>
     </form>
   </validation-observer>

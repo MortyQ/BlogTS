@@ -1,10 +1,10 @@
 <template>
-  <v-container tile flat v-if="loginUser" class="d-flex flex-column mt-15">
+  <v-container tile flat v-if="loginUser" class="d-flex flex-column mt-10">
     <h1 class="ma-auto">Settings</h1>
 
     <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
-      <v-tab v-for="item in 3" :key="item">
-        gsagsadg
+      <v-tab v-for="item in tabs" :key="item">
+        {{ item }}
       </v-tab>
     </v-tabs>
     <v-row cols="12">
@@ -15,29 +15,51 @@
               ><v-col
                 cols="12"
                 md="12"
-                class="ma-auto d-flex flex-column mt-5"
+                class="d-flex flex-column"
                 style="gap: 50px border:3px solid red"
               >
-                <v-img
-                  v-if="loginUser.avatar"
-                  style="border-radius: 50px; border: 3px solid white"
-                  height="100"
-                  width="100"
-                  :src="getStrapiMedia(loginUser.url)"
-                  :lazy-src="getStrapiMedia(loginUser.url)"
-                >
-                </v-img>
-                <v-img
-                  v-else
-                  style="border-radius: 50px; border: 3px solid white"
-                  height="100"
-                  width="100"
-                  src="https://picsum.photos/1600/920?random"
-                  lazy-src="https://picsum.photos/1600/920?random"
-                >
-                </v-img>
+                <v-div>
+                  <v-img
+                    v-if="loginUser.background"
+                    height="250px"
+                    width="100%"
+                    :src="getStrapiMedia(loginUser.url)"
+                    :lazy-src="getStrapiMedia(loginUser.url)"
+                  >
+                  </v-img>
+                  <v-img
+                    v-else
+                    height="250px"
+                    width="100%"
+                    src="https://picsum.photos/1920/1080?random"
+                    lazy-src="https://picsum.photos/1920/1080?random"
+                  >
+                  </v-img>
+                </v-div>
+                <v-div>
+                  <v-img
+                    v-if="loginUser.avatar"
+                    style="border-radius: 50px; border: 3px solid white; position: absolute; top: 20%; left: 10%;"
+                    height="100"
+                    width="100"
+                    :src="getStrapiMedia(loginUser.url)"
+                    :lazy-src="getStrapiMedia(loginUser.url)"
+                  >
+                  </v-img>
+                  <v-img
+                    v-else
+                    style="border-radius: 50px; border: 3px solid white; position: absolute; top: 20%; left: 10%;"
+                    height="100"
+                    width="100"
+                    src="https://picsum.photos/1600/920?random"
+                    lazy-src="https://picsum.photos/1600/920?random"
+                  >
+                  </v-img>
+                  <v-btn text>Upload Avatar</v-btn>
+                  <v-btn text>Upload Background</v-btn>
+                </v-div>
 
-                <AuthorEditForm /> </v-col
+                <AuthorEditForm class="mt-10" /> </v-col
             ></v-card-text>
           </v-card>
           <v-card flat v-if="item === 2">
@@ -69,6 +91,6 @@ export default class EditAuthor extends Vue {
 
   public tab: null = null
 
-  mounted() {}
+  public tabs = ['Edit Account', 'Change Password', 'All Posts']
 }
 </script>

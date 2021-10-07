@@ -14,7 +14,7 @@
 
         <v-btn text to="/search-authors" color="red">
           <span style="color:black">Search all authors</span>
-          <v-icon>mdi-magnify</v-icon>
+          <v-icon class="ml-2">mdi-magnify</v-icon>
         </v-btn>
 
         <v-menu transition="slide-x-transition" bottom right>
@@ -23,7 +23,7 @@
               <span style="color:black">
                 Customazing your account
               </span>
-              <v-icon>mdi-heart</v-icon>
+              <v-icon class="ml-2">mdi-heart</v-icon>
             </v-btn>
           </template>
 
