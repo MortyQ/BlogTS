@@ -30,7 +30,7 @@
                     v-else
                     height="250px"
                     width="100%"
-                    src="https://picsum.photos/1920/1080?random"
+                    :src="urlBg"
                     lazy-src="https://picsum.photos/1920/1080?random"
                   >
                   </v-img>
@@ -47,15 +47,27 @@
                   </v-img>
                   <v-img
                     v-else
-                    style="border-radius: 50px; border: 3px solid white; position: absolute; top: 20%; left: 10%;"
-                    height="100"
-                    width="100"
-                    src="https://picsum.photos/1600/920?random"
+                    style="border-radius: 100px; border: 3px solid white; position: absolute; top: 10%; left: 10%;"
+                    height="150"
+                    width="150"
+                    :src="urlAvatar"
                     lazy-src="https://picsum.photos/1600/920?random"
                   >
                   </v-img>
-                  <v-btn text>Upload Avatar</v-btn>
-                  <v-btn text>Upload Background</v-btn>
+                  <div class="d-flex ">
+                    <v-file-input
+                      label="upload background"
+                      v-model="background"
+                      style="max-width: 250px"
+                      show-size
+                    />
+                    <v-file-input
+                      label="upload avatar"
+                      v-model="avatar"
+                      style="max-width: 250px"
+                      show-size
+                    />
+                  </div>
                 </div>
 
                 <AuthorEditForm class="mt-10" /> </v-col
@@ -92,6 +104,25 @@ export default class EditAuthor extends Vue {
 
   public tabs = ['Edit Account', 'Change Password', 'All Posts']
 
-  mounted() {}
+  public background = null
+  public avatar = null
+
+  get urlBg() {
+    const formData = new FormData()
+    if (!this.background) return
+    formData.append('files.background', this.background, this.background.name)
+    // console.log(formData)
+
+    // console.log(URL.createObjectURL(this.background))
+    this['$axios'].put('http://localhost:1337/users/10', formData)
+    return URL.createObjectURL(this.background)
+  }
+
+  get urlAvatar() {
+    if (!this.avatar) return
+    console.log(URL.createObjectURL(this.avatar))
+
+    return URL.createObjectURL(this.avatar)
+  }
 }
 </script>

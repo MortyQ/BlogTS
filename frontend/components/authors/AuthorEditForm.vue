@@ -55,6 +55,12 @@
         ></v-text-field>
       </ValidationProvider>
 
+      <v-textarea
+        label="Description"
+        v-model="authorInfo.description"
+        hint="Hint text"
+      ></v-textarea>
+
       <v-btn class="mr-4" text type="submit" :disabled="invalid">
         Update Information
       </v-btn>
@@ -65,7 +71,11 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import { mapState } from 'vuex'
-import { ValidationObserver, ValidationProvider } from 'vee-validate'
+import {
+  localeChanged,
+  ValidationObserver,
+  ValidationProvider
+} from 'vee-validate'
 import { AuthorInfo } from '../../helpers/authorTypes'
 
 @Component({
@@ -84,19 +94,23 @@ export default class AuthorForm extends Vue {
         lastName: this.loginUser.lastName,
         webSite: this.loginUser.webSite,
         socialSite: this.loginUser.socialSite,
-        phoneNumber: this.loginUser.phoneNumber
+        phoneNumber: this.loginUser.phoneNumber,
+        description: this.loginUser.description
       })
     )
   }
 
   public editAuthor() {
+    console.log(this.loginUser)
+
     this['$store'].dispatch('login/EDIT_AUTHOR', {
       firstName: this.authorInfo.firstName,
       lastName: this.authorInfo.lastName,
       webSite: this.authorInfo.webSite,
       socialSite: this.authorInfo.socialSite,
       phoneNumber: this.loginUser.phoneNumber,
-      id: this.authorInfo.id
+      id: this.authorInfo.id,
+      description: this.authorInfo.description
     })
   }
 }

@@ -4,7 +4,7 @@ export interface IAuthor {
   slug?: string
   firstName: string
   lastName: string
-  description?: string | null
+  description: string | null
   avatar?: {} | null
   background?: {} | null
   username?: string | null
