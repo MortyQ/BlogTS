@@ -6,7 +6,7 @@
           v-model="authorInfo.firstName"
           :counter="20"
           :error-messages="errors"
-          label="First Name"
+          :label="`First Name`"
           passive
         ></v-text-field>
       </ValidationProvider>
@@ -15,33 +15,34 @@
           v-model="authorInfo.lastName"
           :counter="20"
           :error-messages="errors"
-          label="Last Name"
+          :label="`Last Name`"
           passive
         ></v-text-field>
       </ValidationProvider>
-      <ValidationProvider v-slot="{ errors }" rules="required|email">
+      <ValidationProvider v-slot="{ errors }" rules="email">
         <v-text-field
           v-model="authorInfo.email"
           passive
           :error-messages="errors"
-          label="Enter your mail"
+          disabled
+          :label="`Enter your mail `"
           type="email"
         ></v-text-field>
       </ValidationProvider>
-      <ValidationProvider v-slot="{ errors }" rules="required">
+      <ValidationProvider v-slot="{ errors }" rules="">
         <v-text-field
           v-model="authorInfo.phoneNumber"
           :counter="20"
           :error-messages="errors"
-          label="Phone Number"
+          :label="`Phone Number `"
           passive
         ></v-text-field>
       </ValidationProvider>
       <ValidationProvider v-slot="{ errors }">
         <v-text-field
-          v-model="authorInfo.website"
+          v-model="authorInfo.webSite"
           :error-messages="errors"
-          label="Website"
+          :label="`Website `"
           passive
         ></v-text-field>
       </ValidationProvider>
@@ -49,7 +50,7 @@
         <v-text-field
           v-model="authorInfo.socialSite"
           :error-messages="errors"
-          label="Social Site"
+          :label="`Social Site  `"
           passive
         ></v-text-field>
       </ValidationProvider>
@@ -75,19 +76,28 @@ export default class AuthorForm extends Vue {
   loginUser!: AuthorInfo
 
   get authorInfo(): AuthorInfo {
-    return {
-      email: this.loginUser.email,
-      firstName: this.loginUser.firstName,
-      lastName: this.loginUser.lastName,
-      description: this.loginUser.description,
-      website: this.loginUser.website,
-      socialSite: this.loginUser.socialSite,
-      phoneNumber: this.loginUser.phoneNumber
-    }
+    return JSON.parse(
+      JSON.stringify({
+        id: this.loginUser.id,
+        email: this.loginUser.email,
+        firstName: this.loginUser.firstName,
+        lastName: this.loginUser.lastName,
+        webSite: this.loginUser.webSite,
+        socialSite: this.loginUser.socialSite,
+        phoneNumber: this.loginUser.phoneNumber
+      })
+    )
   }
 
   public editAuthor() {
-    console.log(this.authorInfo)
+    this['$store'].dispatch('login/EDIT_AUTHOR', {
+      firstName: this.authorInfo.firstName,
+      lastName: this.authorInfo.lastName,
+      webSite: this.authorInfo.webSite,
+      socialSite: this.authorInfo.socialSite,
+      phoneNumber: this.loginUser.phoneNumber,
+      id: this.authorInfo.id
+    })
   }
 }
 </script>

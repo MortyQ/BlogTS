@@ -11,6 +11,7 @@ import {
   ILoginUser,
   IAuthResponce
 } from '~/helpers/loginTypes'
+import { AuthorInfo } from '../helpers/authorTypes'
 import * as Context from '@nuxt/types'
 import axios from 'axios'
 import { AppSuperstore } from './index'
@@ -23,7 +24,7 @@ export default class Login extends VuexModule {
   public lastUserName: string | null = ''
   public errorMessage: boolean = false
   public jwt: string | null = ''
-  public loginUser: ILoginUser | null = null
+  public loginUser: ILoginUser | null | AuthorInfo = null
 
   function({ $axios, app, store }) {
     $axios.onRequest((config: any) => {
@@ -89,6 +90,26 @@ export default class Login extends VuexModule {
     return {
       loginUser: null,
       jwt: null
+    }
+  }
+
+  @Mutation
+  private _EDIT_AUTHOR(loginUser: AuthorInfo) {
+    this.loginUser = loginUser
+  }
+  @Action({ commit: '_EDIT_AUTHOR' })
+  public async EDIT_AUTHOR(loginUser: AuthorInfo) {
+    try {
+      let { data } = await axios.put(
+        `http://localhost:1337/users/${loginUser.id}`,
+        loginUser
+      )
+      console.log(loginUser)
+      console.log(data)
+
+      return data
+    } catch (e) {
+      console.log(e)
     }
   }
 }

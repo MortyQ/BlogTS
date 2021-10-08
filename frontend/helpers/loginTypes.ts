@@ -26,9 +26,8 @@ export enum Role {
 
 export interface ILoginUser {
   confirmed?: boolean
-  created_at?: string
-  email: string
-  id: number
+  email?: string
+  id?: number
   role?: {}
   slug?: string
   username: string
