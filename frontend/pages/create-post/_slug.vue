@@ -6,8 +6,7 @@
           <div>
             <v-img
               v-if="loginUser.image"
-              style="border-radius: 50px; border: 3px solid white; position: absolute; top: 20%; left: 10%;"
-              height="100"
+              height="250"
               width="100%"
               :src="getStrapiMedia(loginUser.image.url)"
               :lazy-src="getStrapiMedia(loginUser.image.url)"
@@ -85,6 +84,7 @@
               text
               type="submit"
               :disabled="invalid"
+              :loading="loading"
             >
               Update Information
             </v-btn>
@@ -130,6 +130,7 @@ import { IPost } from '../../helpers/authorTypes'
   computed: { ...mapState('login', ['loginUser']) }
 })
 export default class CreatePost extends Vue {
+  loading: boolean = false
   loginUser!: ILoginUser
   title: string = ''
   image: File | null = null
@@ -140,6 +141,7 @@ export default class CreatePost extends Vue {
 
   get urlBg(): string | null {
     if (!this.image) return null
+    console.log(this.image)
 
     return URL.createObjectURL(this.image)
   }
@@ -180,7 +182,14 @@ export default class CreatePost extends Vue {
       profile: this.profile,
       user: this.loginUser.id
     }
+    this.loading = true
     this['$store'].dispatch('login/CREATE_POST', data)
+
+    this.title = ''
+    this.description = ''
+    this.socialSite = ''
+    this.webSite = ''
+    this.profile = ''
   }
 }
 </script>

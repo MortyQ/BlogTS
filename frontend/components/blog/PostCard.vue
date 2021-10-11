@@ -2,6 +2,15 @@
   <v-card>
     <div>
       <v-img
+        v-if="post.image"
+        height="250px"
+        width="100%"
+        :src="getStrapiMedia(post.image.url)"
+        :lazy-src="getStrapiMedia(post.image.url)"
+      >
+      </v-img>
+      <v-img
+        v-else
         height="250px"
         width="100%"
         src="https://picsum.photos/1920/1080?random"
@@ -21,8 +30,9 @@
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import { IPost } from '../../helpers/authorTypes'
 import { getStrapiMedia } from '../../utils/medias'
+import { mapState } from 'vuex'
 
-@Component({})
+@Component({ computed: { ...mapState('login', ['loginUser']) } })
 export default class PostCard extends Vue {
   @Prop({ default: null })
   post!: IPost
@@ -31,5 +41,11 @@ export default class PostCard extends Vue {
   getStrapiMedia = getStrapiMedia
   image = ''
   imageUrl = ''
+
+  mounted() {
+    // console.log(this.loginUser.posts)
+    console.log(this.post)
+    console.log(this.post.image.url)
+  }
 }
 </script>

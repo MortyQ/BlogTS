@@ -26,6 +26,7 @@ export default class Login extends VuexModule {
   public errorMessage: boolean = false
   public jwt: string | null = ''
   public loginUser: ILoginUser | null | AuthorInfo = null
+  public post: IPost | null = null
 
   function({ $axios, app, store }) {
     $axios.onRequest((config: any) => {
@@ -115,7 +116,7 @@ export default class Login extends VuexModule {
   }
   @Mutation
   private _CREATE_POST(post: IPost) {
-    console.log(post)
+    this.post = post
   }
 
   @Action({ commit: '_CREATE_POST' })
