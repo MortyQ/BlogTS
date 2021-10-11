@@ -5,6 +5,7 @@ import {
   Action,
   MutationAction
 } from 'vuex-module-decorators'
+import { IPost } from '../helpers/authorTypes'
 import {
   IRegister,
   ILogin,
@@ -111,5 +112,35 @@ export default class Login extends VuexModule {
     } catch (e) {
       console.log(e)
     }
+  }
+  @Mutation
+  private _CREATE_POST(post: IPost) {
+    console.log(post)
+  }
+
+  @Action({ commit: '_CREATE_POST' })
+  public async CREATE_POST(post: IPost) {
+    try {
+      let res = await axios.post('http://localhost:1337/posts', post)
+      return res.data
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  @Mutation
+  private _GET_USER_INFO(loginUser: ILoginUser) {
+    this.loginUser = loginUser
+  }
+
+  @Action({ commit: '_GET_USER_INFO' })
+  public async GET_USER_INFO() {
+    try {
+      let res = await axios.get(
+        `http://localhost:1337/users/${this.loginUser.id}`
+      )
+
+      return res.data
+    } catch (e) {}
   }
 }

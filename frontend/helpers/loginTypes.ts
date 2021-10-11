@@ -1,4 +1,4 @@
-import { Post } from './authorTypes'
+import { IPost } from './authorTypes'
 
 export interface IRegister {
   username: string
@@ -33,7 +33,7 @@ export interface ILoginUser {
   role?: {}
   slug?: string
   username: string
-  posts?: Post
+  posts?: IPost
 }
 
 export interface IAuthResponce {

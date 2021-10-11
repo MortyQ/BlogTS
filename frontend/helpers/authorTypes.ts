@@ -17,11 +17,12 @@ export interface AuthorInfo extends IAuthor {
   post?: {}
 }
 
-export interface Post {
+export interface IPost {
   title: string
   description: string
   image: File | null
   socialSite?: string | null
   webSite?: string | null
   profile?: string | null
+  user: number | null
 }

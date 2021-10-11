@@ -11,13 +11,18 @@
       <v-tabs-items class="mt-8" v-model="tab" style="width: 80% !important">
         <v-tab-item v-for="item in 5" :key="item">
           <v-card flat v-if="item === 1">
-            <v-row class="ma-auto" v-if="loginUser.posts">
-              <v-col cols="12" md="6">
-                <Posts
-                  v-for="post in loginUser.posts"
-                  :key="post.id"
-                  :post="post"
-                />
+            <v-row
+              cols="12"
+              class="d-flex justify-center align-center"
+              v-if="loginUser.posts"
+            >
+              <v-col
+                cols="12"
+                md="5"
+                v-for="post in loginUser.posts"
+                :key="post.id"
+              >
+                <Posts :post="post" />
               </v-col>
             </v-row>
           </v-card>
@@ -31,8 +36,9 @@
             </span>
           </v-card>
           <v-card flat v-if="item === 3">
-            <v-card-text
+            <v-card-text v-if="loginUser"
               ><v-col
+                v-if="loginUser"
                 cols="12"
                 md="12"
                 class="d-flex flex-column"
@@ -40,15 +46,6 @@
               >
                 <div>
                   <v-img
-                    v-if="loginUser.background"
-                    height="250px"
-                    width="100%"
-                    :src="getStrapiMedia(loginUser.url)"
-                    :lazy-src="getStrapiMedia(loginUser.url)"
-                  >
-                  </v-img>
-                  <v-img
-                    v-else
                     height="250px"
                     width="100%"
                     :src="urlBg"
@@ -62,8 +59,8 @@
                     style="border-radius: 50px; border: 3px solid white; position: absolute; top: 20%; left: 10%;"
                     height="100"
                     width="100"
-                    :src="getStrapiMedia(loginUser.url)"
-                    :lazy-src="getStrapiMedia(loginUser.url)"
+                    :src="getStrapiMedia(loginUser.avatar.url)"
+                    :lazy-src="getStrapiMedia(loginUser.avatar.url)"
                   >
                   </v-img>
                   <v-img
@@ -102,18 +99,24 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import { mapState } from 'vuex'
 import { ILoginUser } from '../../helpers/loginTypes'
 import Loader from '../../components/global/Loader.vue'
 import AuthorEditForm from '../../components/authors/AuthorEditForm.vue'
 import Posts from '../../components/blog/PostCard.vue'
+import { getStrapiMedia } from '../../utils/medias'
 
 @Component({
   components: { Loader, AuthorEditForm, Posts },
   computed: { ...mapState('login', ['loginUser']) }
 })
 export default class EditAuthor extends Vue {
+  @Prop() process
+  getStrapiMedia = getStrapiMedia
+  image = ''
+  imageUrl = ''
+
   loginUser!: ILoginUser
 
   public tab: null = null
@@ -133,6 +136,10 @@ export default class EditAuthor extends Vue {
     if (!this.avatar) return
 
     return URL.createObjectURL(this.avatar)
+  }
+
+  mounted() {
+    this['$store'].dispatch('login/GET_USER_INFO')
   }
 }
 </script>

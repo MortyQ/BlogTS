@@ -123,7 +123,7 @@ import {
 } from 'tiptap-vuetify'
 import { ILoginUser } from '../../helpers/loginTypes'
 import Loader from '../../components/global/Loader.vue'
-import { Post } from '../../helpers/authorTypes'
+import { IPost } from '../../helpers/authorTypes'
 
 @Component({
   components: { Loader, TiptapVuetify },
@@ -171,15 +171,16 @@ export default class CreatePost extends Vue {
   ]
 
   public createPost() {
-    let data = {
+    let data: IPost = {
       title: this.title,
       description: this.description,
       image: this.image,
       socialSite: this.socialSite,
       webSite: this.webSite,
-      profile: this.profile
+      profile: this.profile,
+      user: this.loginUser.id
     }
-    console.log(data)
+    this['$store'].dispatch('login/CREATE_POST', data)
   }
 }
 </script>
