@@ -118,7 +118,7 @@ export default class EditAuthor extends Vue {
 
   public tab: null = null
 
-  public tabs = ['All Posts', 'Edit Account', 'Change Password']
+  public tabs = ['All Posts', 'Change Password', 'Edit Account']
 
   public background = null
   public avatar = null

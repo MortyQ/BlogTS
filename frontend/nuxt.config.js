@@ -32,7 +32,8 @@ export default {
     { src: '~/plugins/uikit.js', ssr: false },
     { src: '@/plugins/vee-validator', ssr: false },
     { src: '~/plugins/vuex-persist', ssr: false },
-    { src: '@/plugins/axios', ssr: false }
+    { src: '@/plugins/axios', ssr: false },
+    { src: '~/plugins/tiptap-vuetify', ssr: false }
   ],
   strapi: {
     url: strapiBaseUri,
@@ -104,5 +105,7 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {}
+  build: {
+    transpile: ['vuetify/lib', 'tiptap-vuetify']
+  }
 }

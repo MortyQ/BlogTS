@@ -5,8 +5,8 @@ export interface IAuthor {
   firstName: string
   lastName: string
   description: string | null
-  avatar?: {} | null
-  background?: {} | null
+  avatar?: File | null
+  background?: File | null
   username?: string | null
 }
 
@@ -20,5 +20,8 @@ export interface AuthorInfo extends IAuthor {
 export interface Post {
   title: string
   description: string
-  image: {} | null
+  image: File | null
+  socialSite?: string | null
+  webSite?: string | null
+  profile?: string | null
 }

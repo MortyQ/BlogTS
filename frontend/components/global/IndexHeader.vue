@@ -21,6 +21,7 @@
           max-width="300px"
           class="mt-10 pa-10"
           :ripple="false"
+          @click="createPost()"
         >
           <span style="font-size: 1.3rem; color: blue">
             Start your blog
@@ -30,3 +31,20 @@
     </v-row>
   </v-img>
 </template>
+
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import { mapState } from 'vuex'
+import { ILoginUser } from '../../helpers/loginTypes'
+
+@Component({
+  computed: { ...mapState('login', ['loginUser']) }
+})
+export default class IndexHeader extends Vue {
+  loginUser!: ILoginUser
+
+  public createPost() {
+    this['$router'].push(`/create-post/${this.loginUser.slug}`)
+  }
+}
+</script>
