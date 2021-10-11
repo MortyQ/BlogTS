@@ -1,6 +1,7 @@
 <template>
   <v-container tile flat v-if="loginUser" class="d-flex flex-column mt-10">
     <h1 class="ma-auto">Settings</h1>
+
     <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
       <v-tab v-for="item in tabs" :key="item">
         {{ item }}
@@ -10,6 +11,26 @@
       <v-tabs-items class="mt-8" v-model="tab" style="width: 80% !important">
         <v-tab-item v-for="item in 5" :key="item">
           <v-card flat v-if="item === 1">
+            <v-row class="ma-auto" v-if="loginUser.posts">
+              <v-col cols="12" md="6">
+                <Posts
+                  v-for="post in loginUser.posts"
+                  :key="post.id"
+                  :post="post"
+                />
+              </v-col>
+            </v-row>
+          </v-card>
+
+          <v-card flat v-if="item === 2">
+            <span
+              >Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam
+              rerum, laborum, possimus facere exercitationem repellat
+              dignissimos praesentium consequuntur quos molestias iusto et
+              impedit ducimus sequi?
+            </span>
+          </v-card>
+          <v-card flat v-if="item === 3">
             <v-card-text
               ><v-col
                 cols="12"
@@ -73,12 +94,6 @@
                 <AuthorEditForm class="mt-10" /> </v-col
             ></v-card-text>
           </v-card>
-          <v-card flat v-if="item === 2">
-            <v-card-text>dsgasg</v-card-text>
-          </v-card>
-          <v-card flat v-if="item === 3">
-            <v-card-text>dsgasg</v-card-text>
-          </v-card>
         </v-tab-item>
       </v-tabs-items>
     </v-row>
@@ -92,9 +107,10 @@ import { mapState } from 'vuex'
 import { ILoginUser } from '../../helpers/loginTypes'
 import Loader from '../../components/global/Loader.vue'
 import AuthorEditForm from '../../components/authors/AuthorEditForm.vue'
+import Posts from '../../components/blog/PostCard.vue'
 
 @Component({
-  components: { Loader, AuthorEditForm },
+  components: { Loader, AuthorEditForm, Posts },
   computed: { ...mapState('login', ['loginUser']) }
 })
 export default class EditAuthor extends Vue {
@@ -102,25 +118,19 @@ export default class EditAuthor extends Vue {
 
   public tab: null = null
 
-  public tabs = ['Edit Account', 'Change Password', 'All Posts']
+  public tabs = ['All Posts', 'Edit Account', 'Change Password']
 
   public background = null
   public avatar = null
 
   get urlBg() {
-    const formData = new FormData()
     if (!this.background) return
-    formData.append('files.background', this.background, this.background.name)
-    // console.log(formData)
 
-    // console.log(URL.createObjectURL(this.background))
-    this['$axios'].put('http://localhost:1337/users/10', formData)
     return URL.createObjectURL(this.background)
   }
 
   get urlAvatar() {
     if (!this.avatar) return
-    console.log(URL.createObjectURL(this.avatar))
 
     return URL.createObjectURL(this.avatar)
   }

@@ -14,4 +14,11 @@ export interface AuthorInfo extends IAuthor {
   webSite: string | null
   socialSite: string | null
   phoneNumber: string | null
+  post?: {}
+}
+
+export interface Post {
+  title: string
+  description: string
+  image: {} | null
 }
