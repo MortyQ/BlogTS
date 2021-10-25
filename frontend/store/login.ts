@@ -136,12 +136,16 @@ export default class Login extends VuexModule {
 
   @Action({ commit: '_GET_USER_INFO' })
   public async GET_USER_INFO() {
+    console.log(this.loginUser)
+    if (!this.loginUser) return
     try {
       let res = await axios.get(
         `http://localhost:1337/users/${this.loginUser.id}`
       )
 
       return res.data
-    } catch (e) {}
+    } catch (e) {
+      console.log(e)
+    }
   }
 }

@@ -173,17 +173,23 @@ export default class CreatePost extends Vue {
   ]
 
   public createPost() {
-    let data: IPost = {
+    this.loading = true
+    let ja = new FormData()
+    let data = {
       title: this.title,
       description: this.description,
-      image: this.image,
+      // image: this.image,
       socialSite: this.socialSite,
       webSite: this.webSite,
       profile: this.profile,
       user: this.loginUser.id
     }
-    this.loading = true
-    this['$store'].dispatch('login/CREATE_POST', data)
+    if (this.image) {
+      ja.append('files.image', this.image)
+    }
+    ja.append('data', JSON.stringify(data))
+
+    this['$store'].dispatch('login/CREATE_POST', ja)
 
     this.title = ''
     this.description = ''
